@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/facebrain/static/css/main.77ec5f60.css",
+    "main.js": "/facebrain/static/js/main.460b0bb4.js",
+    "static/js/787.6be3f59e.chunk.js": "/facebrain/static/js/787.6be3f59e.chunk.js",
+    "index.html": "/facebrain/index.html",
+    "main.77ec5f60.css.map": "/facebrain/static/css/main.77ec5f60.css.map",
+    "main.460b0bb4.js.map": "/facebrain/static/js/main.460b0bb4.js.map",
+    "787.6be3f59e.chunk.js.map": "/facebrain/static/js/787.6be3f59e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.77ec5f60.css",
+    "static/js/main.460b0bb4.js"
+  ]
+}
