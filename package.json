@@ -7,11 +7,11 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "gh-pages": "^3.2.3",
+    "clarifai": "^2.9.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-particles": "^0.0.3",
-    "react-scripts": "5.0.0",
+    "react-scripts": "4.0.2",
     "react-tilty": "^2.0.3",
     "react-tsparticles": "^1.39.0",
     "tachyons": "^4.12.0",
@@ -42,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }
