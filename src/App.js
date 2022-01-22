@@ -4,9 +4,12 @@ import Logo from './Components/Logo/Logo';
 import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import Rank from './Components/Rank/Rank';
 import FaceRecognition from './Components/FaceRecognittion/FaceRecognition';
+import FaceCounter from './Components/FaceCounter/FaceCounter';
+import UserUpload from './Components/UserUpload/UserUpload';
 import './App.css';
 import Particles from "react-tsparticles";
 import Clarifai from 'clarifai';
+
 
 
 const particlesOptions = {
@@ -49,38 +52,73 @@ class App extends Component {
     }
   }
 
+  // calculateFaceLocation = (data) => {
+  //  const calrifyFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+  //  const image = document.getElementById('inputimage');
+  //  const width = Number(image.width);
+  //  const height = Number(image.height);
+  //  return {
+  //    leftCol : calrifyFace.left_col * width,
+  //    topRow : calrifyFace.top_row * height,
+  //    rightCol: width - (calrifyFace.right_col * width),
+  //    bottomRow: height - (calrifyFace.bottom_row * height)
+  //  }
+
+  // calculateFaceLocation = (data) => {
+  //   const calrifyFace = data.outputs[0].data.regions.map(region => region.region_info.bounding_box);
+  //   const image = document.getElementById('inputimage');
+  //   const width = Number(image.width);
+  //   const height = Number(image.height);
+  //   return calrifyFace.map(face => {
+  //     return {
+  //       leftCol: calrifyFace.left_col * width,
+  //       topRow: calrifyFace.top_row * height,
+  //       rightCol: width - (calrifyFace.right_col * width),
+  //       bottomRow: height - (calrifyFace.bottom_row * height)
+  //     }
+
+  //   });
+
+
+
+  // }
+
   calculateFaceLocation = (data) => {
-   const calrifyFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-   const image = document.getElementById('inputimage');
-   const width = Number(image.width);
-   const height = Number(image.height);
-   return {
-     leftCol : calrifyFace.left_col * width,
-     topRow : calrifyFace.top_row * height,
-     rightCol: width - (calrifyFace.right_col * width),
-     bottomRow: height - (calrifyFace.bottom_row * height)
+    const calrifyFace = data.outputs[0].data.regions.map( (box) => { return box.region_info.bounding_box})
+    
+    const image = document.getElementById('inputimage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    const box = calrifyFace.map((face) => {
+    return {
+    leftCol: face.left_col * width,
+    topRow: face.top_row * height,
+    rightCol: width - (face.right_col * width),
+    bottomRow: height - (face.bottom_row * height)
+    }
+    
+    }
+    
+    );
+    return box;
    }
 
-   
-
-  }
-
   displayFaceBox = (box) => {
-    this.setState({box: box});
+    this.setState({ box: box });
   }
 
   onInputChange = (event) => {
-    this.setState({input: event.target.value});
+    this.setState({ input: event.target.value });
   }
 
   onButtonSubmit = () => {
     console.log('click');
-    this.setState({imageUrl: this.state.input});
+    this.setState({ imageUrl: this.state.input });
     app.models.predict(Clarifai.FACE_DETECT_MODEL,
       this.state.input)
-      .then( response => this.displayFaceBox(this.calculateFaceLocation(response)))
+      .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
       .catch(err => console.log(err));
-      
+
 
   }
 
@@ -168,12 +206,14 @@ class App extends Component {
         />
         <Navigation />
         <Logo />
-        <Rank />
+        {/* <Rank /> */}
+        <FaceCounter total={this.state.box.length}/>
+        <UserUpload />
         <ImageLinkForm
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit} />
-      
-        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/> 
+
+        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
       </div>
     );
   }
