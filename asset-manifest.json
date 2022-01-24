@@ -1,15 +1,25 @@
 {
   "files": {
-    "main.css": "/facebrain/static/css/main.77ec5f60.css",
-    "main.js": "/facebrain/static/js/main.460b0bb4.js",
-    "static/js/787.6be3f59e.chunk.js": "/facebrain/static/js/787.6be3f59e.chunk.js",
+    "main.css": "/facebrain/static/css/main.5b635753.chunk.css",
+    "main.js": "/facebrain/static/js/main.d1ca51ae.chunk.js",
+    "main.js.map": "/facebrain/static/js/main.d1ca51ae.chunk.js.map",
+    "runtime-main.js": "/facebrain/static/js/runtime-main.7b97cf54.js",
+    "runtime-main.js.map": "/facebrain/static/js/runtime-main.7b97cf54.js.map",
+    "static/css/2.6d7c7915.chunk.css": "/facebrain/static/css/2.6d7c7915.chunk.css",
+    "static/js/2.ac07e32f.chunk.js": "/facebrain/static/js/2.ac07e32f.chunk.js",
+    "static/js/2.ac07e32f.chunk.js.map": "/facebrain/static/js/2.ac07e32f.chunk.js.map",
+    "static/js/3.998a23a0.chunk.js": "/facebrain/static/js/3.998a23a0.chunk.js",
+    "static/js/3.998a23a0.chunk.js.map": "/facebrain/static/js/3.998a23a0.chunk.js.map",
     "index.html": "/facebrain/index.html",
-    "main.77ec5f60.css.map": "/facebrain/static/css/main.77ec5f60.css.map",
-    "main.460b0bb4.js.map": "/facebrain/static/js/main.460b0bb4.js.map",
-    "787.6be3f59e.chunk.js.map": "/facebrain/static/js/787.6be3f59e.chunk.js.map"
+    "static/css/2.6d7c7915.chunk.css.map": "/facebrain/static/css/2.6d7c7915.chunk.css.map",
+    "static/css/main.5b635753.chunk.css.map": "/facebrain/static/css/main.5b635753.chunk.css.map",
+    "static/js/2.ac07e32f.chunk.js.LICENSE.txt": "/facebrain/static/js/2.ac07e32f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/css/main.77ec5f60.css",
-    "static/js/main.460b0bb4.js"
+    "static/js/runtime-main.7b97cf54.js",
+    "static/css/2.6d7c7915.chunk.css",
+    "static/js/2.ac07e32f.chunk.js",
+    "static/css/main.5b635753.chunk.css",
+    "static/js/main.d1ca51ae.chunk.js"
   ]
 }
