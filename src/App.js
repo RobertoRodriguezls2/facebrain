@@ -5,10 +5,15 @@ import ImageLinkForm from './Components/ImageLinkForm/ImageLinkForm';
 import Rank from './Components/Rank/Rank';
 import FaceRecognition from './Components/FaceRecognittion/FaceRecognition';
 import FaceCounter from './Components/FaceCounter/FaceCounter';
+import Signin from './Sign in/Signin';
+import Register from './Register/Register';
 import UserUpload from './Components/UserUpload/UserUpload';
+import User from './Components/UserUpload/User';
+import { Name } from './Components/UserUpload/User';
 import './App.css';
 import Particles from "react-tsparticles";
 import Clarifai from 'clarifai';
+
 
 
 
@@ -41,7 +46,9 @@ const app = new Clarifai.App({
 
 
 
+
 class App extends Component {
+
 
   constructor() {
     super();
@@ -49,59 +56,34 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: [],
+      route: 'signin',
+      isSignedIn : false,
+      img: '',
+      in: '',
     }
   }
 
-  // calculateFaceLocation = (data) => {
-  //  const calrifyFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-  //  const image = document.getElementById('inputimage');
-  //  const width = Number(image.width);
-  //  const height = Number(image.height);
-  //  return {
-  //    leftCol : calrifyFace.left_col * width,
-  //    topRow : calrifyFace.top_row * height,
-  //    rightCol: width - (calrifyFace.right_col * width),
-  //    bottomRow: height - (calrifyFace.bottom_row * height)
-  //  }
 
-  // calculateFaceLocation = (data) => {
-  //   const calrifyFace = data.outputs[0].data.regions.map(region => region.region_info.bounding_box);
-  //   const image = document.getElementById('inputimage');
-  //   const width = Number(image.width);
-  //   const height = Number(image.height);
-  //   return calrifyFace.map(face => {
-  //     return {
-  //       leftCol: calrifyFace.left_col * width,
-  //       topRow: calrifyFace.top_row * height,
-  //       rightCol: width - (calrifyFace.right_col * width),
-  //       bottomRow: height - (calrifyFace.bottom_row * height)
-  //     }
-
-  //   });
-
-
-
-  // }
 
   calculateFaceLocation = (data) => {
-    const calrifyFace = data.outputs[0].data.regions.map( (box) => { return box.region_info.bounding_box})
-    
+    const calrifyFace = data.outputs[0].data.regions.map((box) => { return box.region_info.bounding_box })
+
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
     const box = calrifyFace.map((face) => {
-    return {
-    leftCol: face.left_col * width,
-    topRow: face.top_row * height,
-    rightCol: width - (face.right_col * width),
-    bottomRow: height - (face.bottom_row * height)
+      return {
+        leftCol: face.left_col * width,
+        topRow: face.top_row * height,
+        rightCol: width - (face.right_col * width),
+        bottomRow: height - (face.bottom_row * height)
+      }
+
     }
-    
-    }
-    
+
     );
     return box;
-   }
+  }
 
   displayFaceBox = (box) => {
     this.setState({ box: box });
@@ -122,8 +104,26 @@ class App extends Component {
 
   }
 
+  onChange = (event) => {
+    this.setState({ in: event.target.value });
+
+  }
+
+  onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState({isSignedIn: false})
+    }
+    else if (route === 'home') {
+      this.setState({isSignedIn: true})
+    }
+    this.setState({ route: route });
+  }
+
+
   render() {
+    const { isSignedIn, imageUrl, route, box} = this.state; // called destructuring to use the varibales instead of 'this.state.isSignedIn'
     return (
+      
       <div className="App">
         <Particles
           className='particles'
@@ -204,16 +204,36 @@ class App extends Component {
             detectRetina: true,
           }}
         />
-        <Navigation />
+        <Navigation isSignedin={isSignedIn} onRouteChange={this.onRouteChange}/>
+        {route === 'home'
+        ? <div>
         <Logo />
-        {/* <Rank /> */}
-        <FaceCounter total={this.state.box.length}/>
-        <UserUpload />
+        <Rank />
+        <FaceCounter total={this.state.box.length} />
         <ImageLinkForm
           onInputChange={this.onInputChange}
           onButtonSubmit={this.onButtonSubmit} />
+        <FaceRecognition box={box} imageUrl={imageUrl} />
+      </div>
+        : (
+          route === 'signin'
+          ? <Signin onRouteChange={this.onRouteChange}/>
+          : <Register onRouteChange={this.onRouteChange}/>
 
-        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
+        )
+        
+        }
+
+
+        {/* <Rank /> */}
+
+
+        {/* <UserUpload /> */}
+        {/* <User /> */}
+
+
+
+
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Rank = ( {total} ) => {
+const Rank = () => {
     return (
         <div>
             <div className="white f3 ">
@@ -8,7 +8,7 @@ const Rank = ( {total} ) => {
 
             </div>
             <div className="white f1 ">
-                {total}
+                {'#5'}
 
             </div>
         </div>

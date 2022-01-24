@@ -1,41 +1,29 @@
-import React, { useState } from "react";
-import FaceRecognition from "../FaceRecognittion/FaceRecognition";
+// import React from 'react';
+// import './FaceRecognition.css';
+// import UserUpload from '../UserUpload/UserUpload';
 
-export default () => {
-  const [picture, setPicture] = useState(null);
-  const [imgData, setImgData] = useState(null);
-  const onChangePicture = e => {
-    if (e.target.files[0]) {
-      console.log("picture: ", e.target.files);
-      setPicture(e.target.files[0]);
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        setImgData(reader.result);
-      });
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-  return (
-    <div className="register_wrapper">
-      <div className="register_player_column_layout_one">
-        <div className="register_player_Twocolumn_layout_two">
-          <form className="myForm">
-            <div className="formInstructionsDiv formElement">
-              <div className="register_profile_image">
-                <input id="profilePic" type="file" onChange={onChangePicture} />
-              </div>
-              <div className="previewProfilePic">
-                <img className="playerProfilePic_home_tile" src={imgData} width='500px' height='auto' />
-                
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
 
+
+// const UserUpload = ({ imageUrl, box }) => {
+//     const faces = box.map((face, i) => { return <div key={i} className='bounding-box' style={{ top: face.topRow, right: face.rightCol, bottom: face.bottomRow, left: face.leftCol }}></div> })
+//     return (
+//         <div className='center ma '>
+//             <div style={{ position: "relative" }}>
+//                 <img id='inputimage' alt='' src={imageUrl} width='500px' height='auto' />
+//                 {
+//                     box.map((box, i) => {
+//                         const { topRow, rightCol, bottomRow, leftCol } = box;
+//                         return (<div key={i} id="face" className='bounding-box' style={{ top: topRow, right: rightCol, bottom: bottomRow, left: leftCol }}></div>);
+//                     })
+//                 }
+//                 {faces}
+//                 {/* <div className='bounding-box' style={{top: box.topRow, right: box.rightCol, bottom: box.bottomRow, left: box.leftCol}}></div> */}
+//             </div>
+//         </div>
+//     )
+// }
+
+// export default UserUpload;
 
 
 
