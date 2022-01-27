@@ -57,11 +57,35 @@ class App extends Component {
       imageUrl: '',
       box: [],
       route: 'signin',
-      isSignedIn : false,
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        password: '',
+        entries: 0,
+        joined: ''
+
+      },
       img: '',
       in: '',
     }
   }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        entries: data.entries,
+        joined: data.joined
+      }
+    })
+  }
+
+
 
 
 
@@ -98,7 +122,22 @@ class App extends Component {
     this.setState({ imageUrl: this.state.input });
     app.models.predict(Clarifai.FACE_DETECT_MODEL,
       this.state.input)
-      .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
+      .then(response => {
+        if (response) {
+          fetch('http://localhost:3000/image', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, {entries: count}))
+            })
+        }
+        this.displayFaceBox(this.calculateFaceLocation(response))
+      })
       .catch(err => console.log(err));
 
 
@@ -111,19 +150,19 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({isSignedIn: false})
+      this.setState({ isSignedIn: false })
     }
     else if (route === 'home') {
-      this.setState({isSignedIn: true})
+      this.setState({ isSignedIn: true })
     }
     this.setState({ route: route });
   }
 
 
   render() {
-    const { isSignedIn, imageUrl, route, box} = this.state; // called destructuring to use the varibales instead of 'this.state.isSignedIn'
+    const { isSignedIn, imageUrl, route, box } = this.state; // called destructuring to use the varibales instead of 'this.state.isSignedIn'
     return (
-      
+
       <div className="App">
         <Particles
           className='particles'
@@ -188,7 +227,7 @@ class App extends Component {
                   enable: true,
                   area: 800,
                 },
-                value: 80,
+                value: 60,
               },
               opacity: {
                 value: 0.5,
@@ -204,24 +243,24 @@ class App extends Component {
             detectRetina: true,
           }}
         />
-        <Navigation isSignedin={isSignedIn} onRouteChange={this.onRouteChange}/>
+        <Navigation isSignedin={isSignedIn} onRouteChange={this.onRouteChange} />
         {route === 'home'
-        ? <div>
-        <Logo />
-        <Rank />
-        <FaceCounter total={this.state.box.length} />
-        <ImageLinkForm
-          onInputChange={this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit} />
-        <FaceRecognition box={box} imageUrl={imageUrl} />
-      </div>
-        : (
-          route === 'signin'
-          ? <Signin onRouteChange={this.onRouteChange}/>
-          : <Register onRouteChange={this.onRouteChange}/>
+          ? <div>
+            <Logo />
+            <Rank name={this.state.user.name} entries={this.state.user.entries} />
+            <FaceCounter total={this.state.box.length} />
+            <ImageLinkForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit} />
+            <FaceRecognition box={box} imageUrl={imageUrl} />
+          </div>
+          : (
+            route === 'signin'
+              ? <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+              : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
 
-        )
-        
+          )
+
         }
 
 
